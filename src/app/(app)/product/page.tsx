@@ -8,7 +8,7 @@ export default async function Product() {
     <div className="flex flex-col justify-center gap-6">
       <div className="flex flex-col gap-2 text-start">
         <h1 className="text-2xl font-semibold tracking-tight">
-          Cadastre o produto
+          Cadastro de produto
         </h1>
       </div>
 
@@ -45,12 +45,7 @@ export default async function Product() {
         </div>
 
         <div className="flex w-full gap-4 lg:w-72">
-          <Button
-            disabled={false}
-            variant="secondary"
-            className="w-full"
-            type="submit"
-          >
+          <Button disabled={false} variant="secondary" className="w-full">
             Cancelar
           </Button>
 
