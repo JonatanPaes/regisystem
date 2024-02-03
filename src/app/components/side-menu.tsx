@@ -20,21 +20,21 @@ export function SideMenu() {
         </Button>
 
         <Button variant="outline" className="justify-start" asChild>
-          <Link href="/">
+          <Link href="/product">
             <ShoppingCart size={18} className="mr-2" />
             Cadastro de Produtos
           </Link>
         </Button>
 
         <Button variant="outline" className="justify-start" asChild>
-          <Link href="/">
+          <Link href="/client">
             <User2 size={18} className="mr-2" />
             Cadastro de Clientes
           </Link>
         </Button>
 
         <Button variant="outline" className="justify-start" asChild>
-          <Link href="/">
+          <Link href="/assistant">
             <Package size={18} className="mr-2" />
             Assistente de Pedido
           </Link>
