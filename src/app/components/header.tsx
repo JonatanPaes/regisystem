@@ -7,7 +7,7 @@ import { Sheet, SheetContent, SheetTrigger } from './ui/sheet'
 
 export function Header() {
   return (
-    <div className="border-b">
+    <header className="border-b">
       <div className="flex h-20 items-center justify-between px-6">
         <Link
           href="/"
@@ -28,6 +28,6 @@ export function Header() {
           </SheetContent>
         </Sheet>
       </div>
-    </div>
+    </header>
   )
 }
