@@ -1,8 +1,41 @@
+'use client'
+
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+
 import { Button } from '@/app/components/ui/button'
 import { Input } from '@/app/components/ui/input'
 import { Label } from '@/app/components/ui/label'
 
-export default async function Client() {
+const clientForm = z.object({
+  code: z.string(),
+  name: z.string(),
+  cpfOrCnpj: z.string().min(8),
+  email: z.string().email(),
+})
+
+type ClientForm = z.infer<typeof clientForm>
+
+export default function Client() {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<ClientForm>()
+
+  async function handleClient(data: ClientForm) {
+    const existingClients = localStorage.getItem('clients')
+
+    let clients = []
+    if (existingClients) {
+      clients = JSON.parse(existingClients)
+    }
+
+    clients.push(data)
+
+    localStorage.setItem('clients', JSON.stringify(clients))
+  }
+
   return (
     <div className="flex flex-col justify-center gap-6">
       <div className="flex flex-col gap-2 text-start">
@@ -11,37 +44,51 @@ export default async function Client() {
         </h1>
       </div>
 
-      <form className="space-y-4">
+      <form onSubmit={handleSubmit(handleClient)} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="restaurantName">Código</Label>
-          <Input id="code" type="text" />
+          <Label htmlFor="code">Código</Label>
+          <Input id="code" type="text" {...register('code')} />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="restaurantName">Nome</Label>
-          <Input id="productName" type="text" placeholder="Digite o nome" />
+          <Label htmlFor="name">Nome</Label>
+          <Input
+            id="name"
+            type="text"
+            placeholder="Digite o nome"
+            {...register('name')}
+          />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="restaurantName">CPF ou CNPJ</Label>
-          <Input id="price" type="number" placeholder="Digite o CPF ou CNPJ" />
+          <Label htmlFor="cpfOrCnpj">CPF ou CNPJ</Label>
+          <Input
+            id="cpfOrCnpj"
+            type="number"
+            placeholder="Digite o CPF ou CNPJ"
+            {...register('cpfOrCnpj')}
+          />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="restaurantName">E-mail</Label>
-          <Input id="stock" type="email" placeholder="Digite o e-mail" />
+          <Label htmlFor="email">E-mail</Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="Digite o e-mail"
+            {...register('email')}
+          />
         </div>
 
         <div className="flex w-full gap-4 md:w-72">
           <Button
-            disabled={false}
+            disabled={isSubmitting}
             variant="secondary"
             className="w-full"
-            type="submit"
           >
             Cancelar
           </Button>
 
-          <Button disabled={false} className="w-full" type="submit">
+          <Button disabled={isSubmitting} className="w-full" type="submit">
             Salvar
           </Button>
         </div>
