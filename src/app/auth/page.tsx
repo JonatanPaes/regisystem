@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Button } from '../components/ui/button'
@@ -28,11 +29,16 @@ export default function Auth() {
   async function handleAuth(data: AuthForm) {
     const { email, password } = data
 
-    const response = await authAction(email, password)
+    if (email === 'teste@teste.com.br' && password === '1234') {
+      const response = await authAction(email, password)
 
-    document.cookie = `jwt=${response}`
+      document.cookie = `jwt=${response}`
+      toast.success('Login feito com sucesso!!!')
 
-    push('/')
+      push('/')
+    } else {
+      toast.error('Credenciais inválidas.')
+    }
   }
 
   return (
