@@ -1,16 +1,14 @@
-import { ArrowRight } from 'lucide-react'
-
-import { Button } from '@/app/components/ui/button'
 import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/app/components/ui/table'
 
-export default async function Assistant() {
+import { ClienteTableRow } from './components/client-table-row'
+
+export default function Assistant() {
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-xl font-bold tracking-tight md:text-2xl">
@@ -30,44 +28,7 @@ export default async function Assistant() {
             </TableHeader>
 
             <TableBody>
-              <TableRow>
-                <TableCell>121d5sad5dd</TableCell>
-                <TableCell>Jonatán Paes</TableCell>
-                <TableCell>45682235565</TableCell>
-                <TableCell>jonatanpaes182@gmail.com</TableCell>
-                <TableCell>
-                  <Button size="lg">
-                    <ArrowRight className="h-3 w-3" />
-                    <span className="sr-only">Detalhes do pedido</span>
-                  </Button>
-                </TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell>55626566262665</TableCell>
-                <TableCell>John Doe</TableCell>
-                <TableCell>59521578966</TableCell>
-                <TableCell>johndoe@gmail.com</TableCell>
-                <TableCell>
-                  <Button size="lg">
-                    <ArrowRight className="h-3 w-3" />
-                    <span className="sr-only">Detalhes do pedido</span>
-                  </Button>
-                </TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell>121d5sad5dd</TableCell>
-                <TableCell>Lionel Messi</TableCell>
-                <TableCell>86555622555</TableCell>
-                <TableCell>leomessi@gmail.com</TableCell>
-                <TableCell>
-                  <Button size="lg">
-                    <ArrowRight className="h-3 w-3" />
-                    <span className="sr-only">Detalhes do pedido</span>
-                  </Button>
-                </TableCell>
-              </TableRow>
+              <ClienteTableRow />
             </TableBody>
           </Table>
         </div>
