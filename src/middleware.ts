@@ -8,7 +8,6 @@ export function middleware(request: NextRequest) {
   const isAuthenticate = request.cookies.get('jwt')
 
   if (!isPublic && !isAuthenticate) {
-    console.log('Alo rafa')
     return NextResponse.redirect(new URL('/auth', request.url))
   }
 }
