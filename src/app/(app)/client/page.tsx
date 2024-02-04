@@ -1,6 +1,8 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Button } from '@/app/components/ui/button'
@@ -17,6 +19,8 @@ const clientForm = z.object({
 type ClientForm = z.infer<typeof clientForm>
 
 export default function Client() {
+  const { push } = useRouter()
+
   const {
     register,
     handleSubmit,
@@ -27,13 +31,21 @@ export default function Client() {
     const existingClients = localStorage.getItem('clients')
 
     let clients = []
-    if (existingClients) {
-      clients = JSON.parse(existingClients)
+    try {
+      if (existingClients) {
+        clients = JSON.parse(existingClients)
+      }
+
+      clients.push(data)
+
+      localStorage.setItem('clients', JSON.stringify(clients))
+
+      toast.success('Cliente cadastrado com sucesso!')
+
+      push('/')
+    } catch {
+      toast.error('Erro ao cadastrar cliente.')
     }
-
-    clients.push(data)
-
-    localStorage.setItem('clients', JSON.stringify(clients))
   }
 
   return (
