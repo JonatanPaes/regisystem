@@ -44,7 +44,7 @@ export default async function Product() {
           />
         </div>
 
-        <div className="flex w-full gap-4 lg:w-72">
+        <div className="flex w-full gap-4 md:w-72">
           <Button disabled={false} variant="secondary" className="w-full">
             Cancelar
           </Button>

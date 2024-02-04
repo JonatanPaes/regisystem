@@ -31,7 +31,7 @@ export default async function Client() {
           <Input id="stock" type="email" placeholder="Digite o e-mail" />
         </div>
 
-        <div className="flex w-full gap-4 lg:w-72">
+        <div className="flex w-full gap-4 md:w-72">
           <Button
             disabled={false}
             variant="secondary"
