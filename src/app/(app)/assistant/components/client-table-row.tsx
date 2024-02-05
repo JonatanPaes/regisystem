@@ -1,6 +1,7 @@
 'use client'
 
 import { ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 import { Button } from '@/app/components/ui/button'
@@ -33,16 +34,18 @@ export function ClienteTableRow() {
   return (
     <>
       {clients &&
-        clients.map((clients) => (
-          <TableRow key={clients.code}>
-            <TableCell>{clients.code}</TableCell>
-            <TableCell>{clients.name}</TableCell>
-            <TableCell>{clients.cpfOrCnpj}</TableCell>
-            <TableCell>{clients.email}</TableCell>
+        clients.map((client) => (
+          <TableRow key={client.code}>
+            <TableCell>{client.code}</TableCell>
+            <TableCell>{client.name}</TableCell>
+            <TableCell>{client.cpfOrCnpj}</TableCell>
+            <TableCell>{client.email}</TableCell>
             <TableCell>
-              <Button size="lg">
-                <ArrowRight className="h-3 w-3" />
-                <span className="sr-only">Detalhes do pedido</span>
+              <Button asChild size="lg">
+                <Link href={`/assistant/product/${client.code}`}>
+                  <ArrowRight className="h-3 w-3" />
+                  <span className="sr-only">Detalhes do pedido</span>
+                </Link>
               </Button>
             </TableCell>
           </TableRow>
