@@ -14,7 +14,11 @@ interface AssistantProducts {
   stock: string
 }
 
-export default function AssistantOrderProduct() {
+export default function AssistantOrderProduct({
+  params,
+}: {
+  params: { id: string }
+}) {
   const [products, setProducts] = useState<AssistantProducts[]>([])
 
   function getProducts() {
@@ -41,7 +45,7 @@ export default function AssistantOrderProduct() {
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {products.map((product) => (
         <Link
-          href={`/assistant/product/2135145135/payment`}
+          href={`/assistant/product/${params.id}/payment`}
           key={product.productName}
         >
           <Card className="h-[400px] max-w-full rounded-2xl md:w-96">
