@@ -15,9 +15,9 @@ interface Client {
 }
 
 interface Product {
-  price: string
+  price: number
   productName: string
-  stock: string
+  stock: number
 }
 
 interface AssistantContent {
