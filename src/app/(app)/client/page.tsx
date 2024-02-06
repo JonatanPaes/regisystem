@@ -7,15 +7,27 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { ButtonBack } from '@/app/components/button-back'
+import { MessageError } from '@/app/components/message-error'
 import { Button } from '@/app/components/ui/button'
 import { Input } from '@/app/components/ui/input'
 import { Label } from '@/app/components/ui/label'
 
 const clientForm = z.object({
-  code: z.string(),
-  name: z.string(),
-  cpfOrCnpj: z.string().min(8),
-  email: z.string().email(),
+  // Todo criar validação de CPF e CNPJ
+  code: z.string().min(1, { message: 'O code é obrigatório.' }),
+  name: z.string().min(1, { message: 'O nome é obrigatório.' }),
+  cpfOrCnpj: z.string().min(8, {
+    message: 'Esse Campo é obrigatório e precisa ter no mínimo 8 caracteres.',
+  }),
+  email: z
+    .string()
+    .min(1, {
+      message: 'O e-mail é obrigatório.',
+    })
+    .email({
+      message: 'Formato de e-mail inválido',
+    })
+    .toLowerCase(),
 })
 
 type ClientForm = z.infer<typeof clientForm>
@@ -26,7 +38,7 @@ export default function Client() {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<ClientForm>({
     resolver: zodResolver(clientForm),
   })
@@ -64,7 +76,10 @@ export default function Client() {
         <div className="space-y-2">
           <Label htmlFor="code">Código</Label>
           <Input id="code" type="text" {...register('code')} />
+
+          {errors.code && <MessageError>{errors.code.message}</MessageError>}
         </div>
+
         <div className="space-y-2">
           <Label htmlFor="name">Nome</Label>
           <Input
@@ -73,6 +88,8 @@ export default function Client() {
             placeholder="Digite o nome"
             {...register('name')}
           />
+
+          {errors.name && <MessageError>{errors.name.message}</MessageError>}
         </div>
 
         <div className="space-y-2">
@@ -83,6 +100,10 @@ export default function Client() {
             placeholder="Digite o CPF ou CNPJ"
             {...register('cpfOrCnpj')}
           />
+
+          {errors.cpfOrCnpj && (
+            <MessageError>{errors.cpfOrCnpj.message}</MessageError>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -93,6 +114,8 @@ export default function Client() {
             placeholder="Digite o e-mail"
             {...register('email')}
           />
+
+          {errors.email && <MessageError>{errors.email.message}</MessageError>}
         </div>
 
         <div className="flex w-full gap-4 md:w-72">
