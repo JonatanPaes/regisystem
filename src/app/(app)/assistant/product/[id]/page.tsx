@@ -2,10 +2,11 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { Badge } from '@/app/components/ui/badge'
 import { Card, CardContent } from '@/app/components/ui/card'
+import { useAssistant } from '@/contexts/assistant-context'
 
 interface AssistantProducts {
   description: string
@@ -20,6 +21,8 @@ export default function AssistantOrderProduct({
   params: { id: string }
 }) {
   const [products, setProducts] = useState<AssistantProducts[]>([])
+
+  const { setProduct } = useAssistant()
 
   function getProducts() {
     const storedClients = localStorage.getItem('products')
@@ -41,14 +44,26 @@ export default function AssistantOrderProduct({
     return text.slice(0, maxLength) + '...'
   }
 
+  const handleSetProductContext = useCallback(
+    (product: AssistantProducts) => {
+      setProduct?.({
+        price: product.price,
+        productName: product.productName,
+        stock: product.stock,
+      })
+    },
+    [setProduct],
+  )
+
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {products.map((product) => (
         <Link
           href={`/assistant/product/${params.id}/payment`}
           key={product.productName}
+          onClick={() => handleSetProductContext(product)}
         >
-          <Card className="h-[400px] max-w-full rounded-2xl md:w-96">
+          <Card className="h-[420px] max-w-full rounded-2xl md:w-96">
             <CardContent className="px-1 py-0 pt-1">
               <div className="relative h-[160px] w-full">
                 <div className="absolute left-2 top-2 z-50">
@@ -74,19 +89,11 @@ export default function AssistantOrderProduct({
                 <h2 className="mt-2 overflow-hidden text-ellipsis text-nowrap font-bold">
                   {product.productName}
                 </h2>
-                <p className="overflow-hidden text-ellipsis text-nowrap text-sm text-gray-400">
+                <p className="overflow-hidden text-ellipsis text-nowrap text-sm text-card-foreground">
                   R$ {product.price}
                 </p>
-                <p className="overflow-hidden text-ellipsis text-wrap text-sm text-gray-400 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
-                  {truncateText(
-                    `O PlayStation 5 é uma obra-prima da engenharia e design de última
-              geração, elevando a experiência de jogo a novos patamares de
-              imersão e realismo. Com um visual elegante e futurista, o console
-              apresenta linhas aerodinâmicas e detalhes sofisticados que o
-              tornam uma peça de destaque em qualquer ambiente de
-              entretenimento.`,
-                    400,
-                  )}
+                <p className="overflow-hidden text-ellipsis text-wrap text-sm text-secondary-foreground sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
+                  {truncateText(`${product.description}`, 400)}
                 </p>
               </div>
             </CardContent>
