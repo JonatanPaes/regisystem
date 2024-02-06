@@ -1,18 +1,26 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { MessageError } from '../components/message-error'
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { authAction } from './action'
 
 const authForm = z.object({
-  email: z.string().email(),
-  password: z.string().min(4),
+  email: z
+    .string()
+    .email('Preencha com um e-mail valido.')
+    .min(1, { message: 'Esse campo é obrigatário' }),
+  password: z
+    .string()
+    .min(1, { message: 'Esse campo é obrigatário.' })
+    .min(4, { message: 'A senha precisa ter no mínimo 4 caracteres' }),
 })
 
 type AuthForm = z.infer<typeof authForm>
@@ -23,8 +31,10 @@ export default function Auth() {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<AuthForm>()
+    formState: { isSubmitting, errors },
+  } = useForm<AuthForm>({
+    resolver: zodResolver(authForm),
+  })
 
   async function handleAuth(data: AuthForm) {
     const { email, password } = data
@@ -58,6 +68,10 @@ export default function Auth() {
                 placeholder="Digite seu e-mail"
                 {...register('email')}
               />
+
+              {errors.email && (
+                <MessageError>{errors.email.message}</MessageError>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -68,6 +82,10 @@ export default function Auth() {
                 placeholder="Digite sua senha"
                 {...register('password')}
               />
+
+              {errors.password && (
+                <MessageError>{errors.password.message}</MessageError>
+              )}
             </div>
 
             <Button disabled={isSubmitting} className="w-full" type="submit">
