@@ -2,10 +2,11 @@
 
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { Button } from '@/app/components/ui/button'
 import { TableCell, TableRow } from '@/app/components/ui/table'
+import { useAssistant } from '@/contexts/assistant-context'
 
 interface AssistantClients {
   code: string
@@ -15,6 +16,8 @@ interface AssistantClients {
 }
 export function ClienteTableRow() {
   const [clients, setClients] = useState<AssistantClients[]>([])
+
+  const { setClient } = useAssistant()
 
   function getClients() {
     const storedClients = localStorage.getItem('clients')
@@ -31,6 +34,16 @@ export function ClienteTableRow() {
     setClients(loadedClients)
   }, [])
 
+  const handleSetClientContext = useCallback(
+    (client: AssistantClients) => {
+      setClient?.({
+        id: client.code,
+        name: client.name,
+      })
+    },
+    [setClient],
+  )
+
   return (
     <>
       {clients &&
@@ -42,7 +55,10 @@ export function ClienteTableRow() {
             <TableCell>{client.email}</TableCell>
             <TableCell>
               <Button asChild size="lg">
-                <Link href={`/assistant/product/${client.code}`}>
+                <Link
+                  href={`/assistant/product/${client.code}`}
+                  onClick={() => handleSetClientContext(client)}
+                >
                   <ArrowRight className="h-3 w-3" />
                   <span className="sr-only">Detalhes do pedido</span>
                 </Link>
