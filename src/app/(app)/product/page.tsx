@@ -1,10 +1,12 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import { ButtonBack } from '@/app/components/button-back'
 import { Button } from '@/app/components/ui/button'
 import { Input } from '@/app/components/ui/input'
 import { Label } from '@/app/components/ui/label'
@@ -25,7 +27,9 @@ export default function Product() {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<ProductForm>()
+  } = useForm<ProductForm>({
+    resolver: zodResolver(productForm),
+  })
 
   async function handleProduct(data: ProductForm) {
     const existingProducts = localStorage.getItem('products')
@@ -97,13 +101,7 @@ export default function Product() {
         </div>
 
         <div className="flex w-full gap-4 md:w-72">
-          <Button
-            disabled={isSubmitting}
-            variant="secondary"
-            className="w-full"
-          >
-            Cancelar
-          </Button>
+          <ButtonBack />
 
           <Button disabled={isSubmitting} className="w-full" type="submit">
             Salvar
