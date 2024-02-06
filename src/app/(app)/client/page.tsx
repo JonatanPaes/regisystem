@@ -43,7 +43,7 @@ export default function Client() {
     resolver: zodResolver(clientForm),
   })
 
-  async function handleClient(data: ClientForm) {
+  async function handleCreateNewClient(data: ClientForm) {
     const existingClients = localStorage.getItem('clients')
 
     let clients = []
@@ -72,7 +72,10 @@ export default function Client() {
         </h1>
       </div>
 
-      <form onSubmit={handleSubmit(handleClient)} className="space-y-4">
+      <form
+        onSubmit={handleSubmit(handleCreateNewClient)}
+        className="space-y-4"
+      >
         <div className="space-y-2">
           <Label htmlFor="code">Código</Label>
           <Input id="code" type="text" {...register('code')} />

@@ -41,7 +41,7 @@ export default function Product() {
     resolver: zodResolver(productForm),
   })
 
-  async function handleProduct(data: ProductForm) {
+  async function handleCreateNewProduct(data: ProductForm) {
     const existingProducts = localStorage.getItem('products')
 
     let products = []
@@ -70,7 +70,10 @@ export default function Product() {
         </h1>
       </div>
 
-      <form onSubmit={handleSubmit(handleProduct)} className="space-y-4">
+      <form
+        onSubmit={handleSubmit(handleCreateNewProduct)}
+        className="space-y-4"
+      >
         <div className="space-y-2">
           <Label htmlFor="name">Nome do produto</Label>
           <Input
