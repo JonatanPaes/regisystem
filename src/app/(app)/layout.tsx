@@ -1,13 +1,17 @@
 import { ReactNode } from 'react'
 
+import { AssistantProvider } from '@/contexts/assistant-context'
+
 import { Header } from '../components/header'
 
 export default function StoreLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col antialiased">
-      <Header />
+    <AssistantProvider>
+      <div className="flex min-h-screen flex-col antialiased">
+        <Header />
 
-      <div className="flex flex-1 flex-col gap-4 p-8 pt-6">{children}</div>
-    </div>
+        <div className="flex flex-1 flex-col gap-4 p-8 pt-6">{children}</div>
+      </div>
+    </AssistantProvider>
   )
 }
