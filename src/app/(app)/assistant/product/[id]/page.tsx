@@ -12,7 +12,7 @@ interface AssistantProducts {
   image?: string
   description: string
   price: number
-  productName: string
+  name: string
   stock: number
 }
 
@@ -26,10 +26,10 @@ export default function AssistantOrderProduct({
   const { setProduct } = useAssistant()
 
   function getProducts() {
-    const storedClients = localStorage.getItem('products')
+    const storedProducts = localStorage.getItem('products')
 
-    if (storedClients) {
-      return JSON.parse(storedClients)
+    if (storedProducts) {
+      return JSON.parse(storedProducts)
     }
 
     return []
@@ -49,7 +49,7 @@ export default function AssistantOrderProduct({
     (product: AssistantProducts) => {
       setProduct?.({
         price: product.price,
-        productName: product.productName,
+        productName: product.name,
         stock: product.stock,
       })
     },
@@ -61,7 +61,7 @@ export default function AssistantOrderProduct({
       {products.map((product) => (
         <Link
           href={`/assistant/product/${params.id}/payment`}
-          key={product.productName}
+          key={product.name}
           onClick={() => handleSetProductContext(product)}
         >
           <Card className="h-[420px] max-w-full rounded-2xl md:w-96">
@@ -88,7 +88,7 @@ export default function AssistantOrderProduct({
 
               <div className="overflow-hidden px-2 pb-3 ">
                 <h2 className="mt-2 overflow-hidden text-ellipsis text-nowrap font-bold">
-                  {product.productName}
+                  {product.name}
                 </h2>
                 <p className="overflow-hidden text-ellipsis text-nowrap text-sm text-card-foreground">
                   {product.price.toLocaleString('pt-BR', {
