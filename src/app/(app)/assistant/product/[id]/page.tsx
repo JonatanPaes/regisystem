@@ -9,10 +9,11 @@ import { Card, CardContent } from '@/app/components/ui/card'
 import { useAssistant } from '@/contexts/assistant-context'
 
 interface AssistantProducts {
+  image?: string
   description: string
-  price: string
+  price: number
   productName: string
-  stock: string
+  stock: number
 }
 
 export default function AssistantOrderProduct({
@@ -76,7 +77,7 @@ export default function AssistantOrderProduct({
                 </div>
                 <Image
                   alt="product"
-                  src="https://images.kabum.com.br/produtos/fotos/magalu/459233/PlayStation-5-825GB-1-Controle-Branco-Sony_1682705787_g.jpg"
+                  src={product.image ?? '/default-image.jpg'}
                   style={{
                     objectFit: 'cover',
                   }}
@@ -90,7 +91,10 @@ export default function AssistantOrderProduct({
                   {product.productName}
                 </h2>
                 <p className="overflow-hidden text-ellipsis text-nowrap text-sm text-card-foreground">
-                  R$ {product.price}
+                  {product.price.toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}
                 </p>
                 <p className="overflow-hidden text-ellipsis text-wrap text-sm text-secondary-foreground sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
                   {truncateText(`${product.description}`, 400)}
