@@ -7,16 +7,26 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { ButtonBack } from '@/app/components/button-back'
+import { MessageError } from '@/app/components/message-error'
 import { Button } from '@/app/components/ui/button'
 import { Input } from '@/app/components/ui/input'
 import { Label } from '@/app/components/ui/label'
 import { Textarea } from '@/app/components/ui/textarea'
 
 const productForm = z.object({
-  productName: z.string(),
-  price: z.string(),
-  stock: z.string(),
-  description: z.string(),
+  name: z.string().min(1, { message: 'O nome é obrigatório.' }),
+  price: z
+    .number()
+    .min(0, { message: 'O preço não pode ser negativo.' })
+    .min(1, { message: 'O preço é obrigatório.' }),
+  stock: z
+    .number()
+    .min(0, { message: 'O estoque não pode ser negativo.' })
+    .min(1, { message: 'O estoque é obrigatório.' }),
+  description: z
+    .string()
+    .min(1, { message: 'A descrição é obrigatória' })
+    .max(400, { message: 'A descrição pode conter 400 caracteres.' }),
 })
 
 type ProductForm = z.infer<typeof productForm>
@@ -26,7 +36,7 @@ export default function Product() {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<ProductForm>({
     resolver: zodResolver(productForm),
   })
@@ -62,13 +72,15 @@ export default function Product() {
 
       <form onSubmit={handleSubmit(handleProduct)} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="productName">Nome do produto</Label>
+          <Label htmlFor="name">Nome do produto</Label>
           <Input
-            id="productName"
+            id="name"
             type="text"
             placeholder="Digite nome do seu produto"
-            {...register('productName')}
+            {...register('name')}
           />
+
+          {errors.name && <MessageError>{errors.name.message}</MessageError>}
         </div>
 
         <div className="space-y-2">
@@ -77,8 +89,11 @@ export default function Product() {
             id="price"
             type="number"
             placeholder="Digite o preço"
-            {...register('price')}
+            required
+            {...register('price', { valueAsNumber: true })}
           />
+
+          {errors.price && <MessageError>{errors.price.message}</MessageError>}
         </div>
 
         <div className="space-y-2">
@@ -86,9 +101,12 @@ export default function Product() {
           <Input
             id="stock"
             type="number"
+            required
             placeholder="Digite a quantidade de estoque"
-            {...register('stock')}
+            {...register('stock', { valueAsNumber: true })}
           />
+
+          {errors.stock && <MessageError>{errors.stock.message}</MessageError>}
         </div>
 
         <div className="space-y-2">
@@ -98,6 +116,10 @@ export default function Product() {
             placeholder="Digite a descrição do produto"
             {...register('description')}
           />
+
+          {errors.description && (
+            <MessageError>{errors.description.message}</MessageError>
+          )}
         </div>
 
         <div className="flex w-full gap-4 md:w-72">
