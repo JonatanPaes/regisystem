@@ -241,7 +241,7 @@ export default function Address() {
             className="w-full"
             type="submit"
           >
-            Finalizar Compra
+            Resumo da Compra
           </Button>
         </div>
       </form>
