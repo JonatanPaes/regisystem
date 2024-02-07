@@ -9,7 +9,10 @@ import { ThemeProvider } from './components/theme/theme-provider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'RegiSystem',
+  title: {
+    template: '%s | regisystem',
+    default: 'regisystem',
+  },
 }
 
 export default function RootLayout({
@@ -20,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Toaster richColors />
+
       <body className={`${inter.className}`}>
         <ThemeProvider
           storageKey="regisystem-theme"

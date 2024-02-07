@@ -1,3 +1,5 @@
+import { Metadata } from 'next'
+
 import {
   Table,
   TableBody,
@@ -7,6 +9,10 @@ import {
 } from '@/app/components/ui/table'
 
 import { OrderTableRow } from './components/order-table-row'
+
+export const metadata: Metadata = {
+  title: 'Home',
+}
 
 export default function Home() {
   return (

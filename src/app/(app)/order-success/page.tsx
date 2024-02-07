@@ -1,4 +1,9 @@
+import { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Compra feita com sucesso',
+}
 
 export default function OrderSuccess() {
   return (

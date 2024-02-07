@@ -1,3 +1,5 @@
+import { Metadata } from 'next'
+
 import {
   Table,
   TableBody,
@@ -7,6 +9,10 @@ import {
 } from '@/app/components/ui/table'
 
 import { ClienteTableRow } from './components/client-table-row'
+
+export const metadata: Metadata = {
+  title: 'Assistente de compra',
+}
 
 export default function Assistant() {
   return (
