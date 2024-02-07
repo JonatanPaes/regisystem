@@ -60,6 +60,9 @@ export default function Address() {
     resolver: zodResolver(addressForm),
   })
 
+  const paymentMethod =
+    payment?.type === 'card' ? 'Cartão  de credito' : 'Dinheiro'
+
   async function handleAddress(data: AddressForm) {
     setAddress(data)
   }
@@ -69,7 +72,8 @@ export default function Address() {
 
     const orderStructure = {
       price: product?.price,
-      paymentMethod: 'card',
+      productName: product?.productName,
+      paymentMethod,
       nameClient: client?.name,
       address: address?.address,
     }
@@ -130,7 +134,7 @@ export default function Address() {
               <h2 className="font-bold">Método de Pagamento</h2>
 
               <p className="text-sm text-card-foreground">
-                {`${payment?.type === 'card' ? 'Cartão  de credito' : 'Dinheiro'} em ${payment?.installmentNumbers}`}
+                {`${paymentMethod} em ${payment?.installmentNumbers}`}
               </p>
             </div>
 
