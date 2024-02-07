@@ -33,7 +33,7 @@ const clientForm = z.object({
 type ClientForm = z.infer<typeof clientForm>
 
 export default function Client() {
-  const { push } = useRouter()
+  const router = useRouter()
 
   const {
     register,
@@ -58,7 +58,7 @@ export default function Client() {
 
       toast.success('Cliente cadastrado com sucesso!')
 
-      push('/')
+      router.push('/')
     } catch {
       toast.error('Erro ao cadastrar cliente.')
     }
