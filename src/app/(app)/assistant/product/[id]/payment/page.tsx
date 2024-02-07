@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CreditCard, DollarSign } from 'lucide-react'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useCallback } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -34,6 +34,7 @@ interface Payment {
 }
 
 export default function Payment({ params }: { params: { id: string } }) {
+  const router = useRouter()
   const { setPayment, product } = useAssistant()
 
   const { control, watch } = useForm<PaymentForm>({
@@ -49,9 +50,9 @@ export default function Payment({ params }: { params: { id: string } }) {
       type: watch('type'),
       installmentNumbers: watch('installmentNumbers'),
     })
-  }, [setPayment, watch])
 
-  console.log('WATCH ==>', watch('installmentNumbers'))
+    router.push(`/assistant/product/${params.id}/payment/address`)
+  }, [setPayment, watch, router, params])
 
   return (
     <div className="flex flex-col gap-4">
@@ -252,13 +253,8 @@ export default function Payment({ params }: { params: { id: string } }) {
         <div className="flex w-full gap-4 md:w-72">
           <ButtonBack />
 
-          <Button className="w-full" asChild>
-            <Link
-              href={`/assistant/product/${params.id}/payment/address`}
-              onClick={handleSetPaymentContext}
-            >
-              Continuar
-            </Link>
+          <Button onClick={handleSetPaymentContext} className="w-full">
+            Continuar
           </Button>
         </div>
       </div>
