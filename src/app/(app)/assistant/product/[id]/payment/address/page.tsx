@@ -93,10 +93,6 @@ export default function Address() {
     }
   }
 
-  function handleFinishOrder() {
-    setIsResumeOpen(!isResumeOpen)
-  }
-
   return (
     <div className="flex flex-col justify-center gap-6">
       <div className="flex flex-col gap-2 text-start">
@@ -125,7 +121,7 @@ export default function Address() {
                 })}
               </p>
 
-              <span className="text-sm">Qtd: {product?.stock}</span>
+              <span className="text-sm">Qtd: 1</span>
             </div>
 
             <Separator />
@@ -236,7 +232,7 @@ export default function Address() {
           <ButtonBack />
 
           <Button
-            onClick={() => handleFinishOrder()}
+            onClick={() => setIsResumeOpen(!isResumeOpen)}
             disabled={isSubmitting || !isValid}
             className="w-full"
             type="submit"
