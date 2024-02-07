@@ -1,17 +1,9 @@
 describe('login to the application', () => {
-  it('should login', () => {
-    cy.visit('http://localhost:3000/auth')
-
-    cy.get('input[id="email"]').type('teste@teste.com.br')
-
-    cy.get('input[id="password"]').type('1234')
-
-    cy.get('button[type="submit"]').click()
+  beforeEach(() => {
+    cy.visit('/auth')
   })
 
   it('should show an error message when trying to log in without filling in the email and password correctly', () => {
-    cy.visit('http://localhost:3000/auth')
-
     cy.get('input[id="email"]').clear()
 
     cy.get('input[id="password"]').clear()
@@ -23,8 +15,6 @@ describe('login to the application', () => {
   })
 
   it('should give an error when entering invalid credentials', () => {
-    cy.visit('http://localhost:3000/auth')
-
     cy.get('input[id="email"]').type('testeerro@teste.com')
 
     cy.get('input[id="password"]').type('4321')
@@ -32,5 +22,15 @@ describe('login to the application', () => {
     cy.get('button[type="submit"]').click()
 
     cy.get('li').contains('Credenciais inválidas.').should('be.visible')
+  })
+
+  it('should login', () => {
+    cy.get('input[id="email"]').type('teste@teste.com.br')
+
+    cy.get('input[id="password"]').type('1234')
+
+    cy.get('button[type="submit"]').click()
+
+    cy.url().should('include', '/')
   })
 })
