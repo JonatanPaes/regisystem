@@ -78,7 +78,12 @@ export default function Client() {
       >
         <div className="space-y-2">
           <Label htmlFor="code">Código</Label>
-          <Input id="code" type="text" {...register('code')} />
+          <Input
+            id="code"
+            placeholder="Digite o código do cliente"
+            type="text"
+            {...register('code')}
+          />
 
           {errors.code && <MessageError>{errors.code.message}</MessageError>}
         </div>
