@@ -33,7 +33,6 @@ export function OrderTableRow() {
     <>
       {orders &&
         orders.map((order) => {
-          console.log('order ===>', order)
           return (
             <TableRow key={order.nameClient}>
               <TableCell>{order.nameClient}</TableCell>

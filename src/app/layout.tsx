@@ -4,6 +4,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from 'sonner'
 
+import { ThemeProvider } from './components/theme/theme-provider'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -18,7 +20,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Toaster richColors />
-      <body className={`${inter.className} dark`}>{children}</body>
+      <body className={`${inter.className}`}>
+        <ThemeProvider
+          storageKey="regisystem-theme"
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   )
 }
