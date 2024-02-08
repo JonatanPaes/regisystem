@@ -69,5 +69,4 @@ npm run cypress
 - [Sonner](https://sonner.emilkowal.ski/)
 - [TailwindCSS](https://tailwindcss.com/)
 - [Lucide](https://lucide.dev/)
-- [Lucide](https://lucide.dev/)
 - [Cypress](https://www.cypress.io/)
