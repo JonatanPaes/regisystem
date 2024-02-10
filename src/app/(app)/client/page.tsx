@@ -52,7 +52,11 @@ export default function Client() {
         clients = JSON.parse(existingClients)
       }
 
-      clients.push(data)
+      const uniqueID = Date.now() + Math.random().toString(16).substring(2)
+
+      const newClient = { ...data, id: uniqueID }
+
+      clients.push(newClient)
 
       localStorage.setItem('clients', JSON.stringify(clients))
 
