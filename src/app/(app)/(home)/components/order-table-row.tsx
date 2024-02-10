@@ -1,10 +1,14 @@
 'use client'
 
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import { useEffect, useState } from 'react'
 
 import { TableCell, TableRow } from '@/app/components/ui/table'
 
 interface Orders {
+  id: string
+  createdAt: string
   address: string
   nameClient: string
   productName: string
@@ -34,7 +38,12 @@ export function OrderTableRow() {
       {orders &&
         orders.map((order) => {
           return (
-            <TableRow key={order.nameClient}>
+            <TableRow key={order.id}>
+              <TableCell>
+                {format(order.createdAt, 'dd-MM-yyyy', {
+                  locale: ptBR,
+                })}
+              </TableCell>
               <TableCell>{order.nameClient}</TableCell>
               <TableCell>{order.productName}</TableCell>
               <TableCell>{order.paymentMethod}</TableCell>

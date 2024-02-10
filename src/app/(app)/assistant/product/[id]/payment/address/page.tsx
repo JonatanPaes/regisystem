@@ -80,6 +80,8 @@ export default function Address() {
     const existingProducts = localStorage.getItem('products')
 
     const orderStructure = {
+      id: Date.now() + Math.random().toString(16).substring(2),
+      createdAt: new Date().toISOString(),
       price: product?.price,
       productName: product?.productName,
       paymentMethod,
