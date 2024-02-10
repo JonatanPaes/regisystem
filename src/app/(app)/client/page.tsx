@@ -13,12 +13,22 @@ import { Input } from '@/app/components/ui/input'
 import { Label } from '@/app/components/ui/label'
 
 const clientForm = z.object({
-  // Todo criar validação de CPF e CNPJ
   code: z.string().min(1, { message: 'O code é obrigatório.' }),
   name: z.string().min(1, { message: 'O nome é obrigatório.' }),
-  cpfOrCnpj: z.string().min(8, {
-    message: 'Esse Campo é obrigatório e precisa ter no mínimo 8 caracteres.',
-  }),
+  cpfOrCnpj: z
+    .string()
+    .min(8, {
+      message: 'Esse Campo é obrigatório e precisa ter no mínimo 8 caracteres.',
+    })
+    .refine(
+      (value) => {
+        const cleanedValue = value.replace(/\D/g, '')
+        return cleanedValue.length === 11 || cleanedValue.length === 14
+      },
+      {
+        message: 'CPF ou CNPJ inválido. Deve conter 11 ou 14 dígitos.',
+      },
+    ),
   email: z
     .string()
     .min(1, {
