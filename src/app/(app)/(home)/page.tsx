@@ -24,8 +24,8 @@ export default function Home() {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[150px]">Data</TableHead>
-                <TableHead className="w-[200px]">Nome do cliente </TableHead>
-                <TableHead>Nome do Produto</TableHead>
+                <TableHead>Nome do cliente </TableHead>
+                <TableHead className="w-[230px]">Nome do Produto</TableHead>
                 <TableHead className="w-[200px]">Método de pagamento</TableHead>
                 <TableHead className="w-[150x]">Preço do produto</TableHead>
               </TableRow>
