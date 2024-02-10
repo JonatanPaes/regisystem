@@ -70,4 +70,5 @@ npm run cypress
 - [TailwindCSS](https://tailwindcss.com/)
 - [Lucide](https://lucide.dev/)
 - [Lucide](https://lucide.dev/)
+- [Date-fns](https://date-fns.org/)
 - [Cypress](https://www.cypress.io/)
