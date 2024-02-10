@@ -50,7 +50,11 @@ export default function Product() {
         products = JSON.parse(existingProducts)
       }
 
-      products.push(data)
+      const uniqueID = Date.now() + Math.random().toString(16).substring(2)
+
+      const newProduct = { ...data, id: uniqueID }
+
+      products.push(newProduct)
 
       localStorage.setItem('products', JSON.stringify(products))
 
