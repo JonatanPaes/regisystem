@@ -43,6 +43,7 @@ export default function Auth() {
       const response = await authAction(email, password)
 
       document.cookie = `jwt=${response}`
+
       toast.success('Login feito com sucesso!!!')
 
       push('/')
