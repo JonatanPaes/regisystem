@@ -44,6 +44,14 @@ interface Address {
   state: string
 }
 
+interface Product {
+  description: string
+  id: string
+  name: string
+  price: number
+  stock: number
+}
+
 export default function Address() {
   const { push } = useRouter()
 
@@ -69,6 +77,7 @@ export default function Address() {
 
   function handleFinalizeOrder() {
     const existingOrder = localStorage.getItem('orders')
+    const existingProducts = localStorage.getItem('products')
 
     const orderStructure = {
       price: product?.price,
@@ -78,18 +87,30 @@ export default function Address() {
       address: address?.address,
     }
 
-    let order = []
+    let orders = []
+    let products = []
 
     try {
       if (existingOrder) {
-        order = JSON.parse(existingOrder)
+        orders = JSON.parse(existingOrder)
       }
 
-      order.push(orderStructure)
+      orders.push(orderStructure)
 
+      localStorage.setItem('orders', JSON.stringify(orders))
       toast.success('Pedido realizado com sucesso')
 
-      localStorage.setItem('orders', JSON.stringify(order))
+      if (existingProducts) {
+        products = JSON.parse(existingProducts)
+        const productIndex = products.findIndex(
+          (findProduct: Product) => findProduct.id === product?.id,
+        )
+
+        if (productIndex !== -1) {
+          products[productIndex].stock = products[productIndex].stock - 1
+          localStorage.setItem('products', JSON.stringify(products))
+        }
+      }
 
       push('/order-success')
     } catch {

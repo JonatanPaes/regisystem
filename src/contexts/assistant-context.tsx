@@ -16,6 +16,7 @@ interface Client {
 }
 
 interface Product {
+  id: string
   price: number
   productName: string
   stock: number

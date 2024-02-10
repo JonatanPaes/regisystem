@@ -9,6 +9,7 @@ import { Card, CardContent } from '@/app/components/ui/card'
 import { useAssistant } from '@/contexts/assistant-context'
 
 interface AssistantProducts {
+  id: string
   image?: string
   description: string
   price: number
@@ -48,6 +49,7 @@ export default function AssistantOrderProduct({
   const handleSetProductContext = useCallback(
     (product: AssistantProducts) => {
       setProduct?.({
+        id: product.id,
         price: product.price,
         productName: product.name,
         stock: product.stock,
