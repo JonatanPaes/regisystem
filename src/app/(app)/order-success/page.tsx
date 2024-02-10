@@ -12,9 +12,9 @@ export default function OrderSuccess() {
         Compra feita com sucesso
       </h1>
       <p className="text-accent-foreground">
-        Voltar para o{' '}
+        Voltar para tela de{' '}
         <Link href="/" className="text-primary">
-          Home
+          Início
         </Link>
       </p>
     </div>
