@@ -31,10 +31,6 @@ export function Header() {
             </SheetContent>
           </Sheet>
         </div>
-
-        {/* <div className="ml-auto flex items-center gap-2">
-        
-        </div> */}
       </div>
     </header>
   )
