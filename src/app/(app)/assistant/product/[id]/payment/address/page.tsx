@@ -1,6 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -23,7 +24,11 @@ import { Separator } from '@/app/components/ui/separator'
 import { useAssistant } from '@/contexts/assistant-context'
 
 const addressForm = z.object({
-  cep: z.string().min(8, { message: 'O CEP é obrigatório.' }),
+  cep: z
+    .string()
+    .min(1, { message: 'O CEP é obrigatório.' })
+    .max(8)
+    .regex(/^\d{8}$/, { message: 'O CEP deve conter exatamente 8 dígitos.' }),
   address: z.string().min(1, { message: 'O Endereço é obrigatório.' }),
   residenceNumber: z
     .string()
@@ -38,7 +43,7 @@ type AddressForm = z.infer<typeof addressForm>
 interface Address {
   cep: string
   address: string
-  residenceNumber: string
+  residenceNumber?: string
   neighborhood: string
   city: string
   state: string
@@ -64,6 +69,8 @@ export default function Address() {
     register,
     handleSubmit,
     formState: { isSubmitting, errors, isValid },
+    setError,
+    clearErrors,
   } = useForm<AddressForm>({
     resolver: zodResolver(addressForm),
   })
@@ -117,6 +124,34 @@ export default function Address() {
       push('/order-success')
     } catch {
       toast.error('Erro ao finalizar pedido')
+    }
+  }
+
+  async function fetchAddressInfo(cep: string) {
+    try {
+      const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+
+      const { data } = response
+
+      if (data.erro) {
+        setError('cep', {
+          message: 'CEP não encontrado',
+        })
+      } else {
+        clearErrors('cep')
+      }
+
+      const { logradouro, bairro, localidade, uf } = data
+
+      setAddress({
+        cep,
+        address: logradouro,
+        neighborhood: bairro,
+        city: localidade,
+        state: uf,
+      })
+    } catch (error) {
+      console.error('Erro ao buscar informações do CEP:', error)
     }
   }
 
@@ -191,9 +226,11 @@ export default function Address() {
           <Label htmlFor="cep">CEP</Label>
           <Input
             id="cep"
-            type="number"
+            type="text"
+            maxLength={8}
             placeholder="EX. 18690000"
             {...register('cep')}
+            onChange={(e) => fetchAddressInfo(e.target.value)}
           />
 
           {errors.cep && <MessageError>{errors.cep.message}</MessageError>}
@@ -205,6 +242,7 @@ export default function Address() {
             id="address"
             type="text"
             placeholder="Digite o endereço"
+            value={address?.address || ''}
             {...register('address')}
           />
 
@@ -233,6 +271,7 @@ export default function Address() {
             id="neighborhood"
             type="text"
             placeholder="Digite o bairro"
+            value={address?.neighborhood || ''}
             {...register('neighborhood')}
           />
 
@@ -243,14 +282,26 @@ export default function Address() {
 
         <div className="space-y-2">
           <Label htmlFor="city">Cidade</Label>
-          <Input id="city" type="text" placeholder="" {...register('city')} />
+          <Input
+            id="city"
+            type="text"
+            placeholder=""
+            value={address?.city || ''}
+            {...register('city')}
+          />
 
           {errors.city && <MessageError>{errors.city.message}</MessageError>}
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="state">Estado</Label>
-          <Input id="state" type="text" placeholder="" {...register('state')} />
+          <Input
+            id="state"
+            type="text"
+            placeholder=""
+            value={address?.state || ''}
+            {...register('state')}
+          />
 
           {errors.state && <MessageError>{errors.state.message}</MessageError>}
         </div>
