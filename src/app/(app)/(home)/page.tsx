@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-xl font-bold tracking-tight md:text-2xl">Vendas</h1>
+      <h1 className="text-xl font-bold tracking-tight md:text-2xl">Pedidos</h1>
       <div className="space-y-2.5 ">
         <div className="rounded-md border">
           <Table>
