@@ -13,6 +13,7 @@ import { Button } from '@/app/components/ui/button'
 import { Card, CardContent } from '@/app/components/ui/card'
 import { Input } from '@/app/components/ui/input'
 import { useAssistant } from '@/contexts/assistant-context'
+import { priceFormatter } from '@/utils/formatter'
 
 interface AssistantProducts {
   id: string
@@ -148,10 +149,7 @@ export default function AssistantOrderProduct({
                     {product.name}
                   </h2>
                   <p className="overflow-hidden text-ellipsis text-nowrap text-sm text-card-foreground">
-                    {product.price.toLocaleString('pt-BR', {
-                      style: 'currency',
-                      currency: 'BRL',
-                    })}
+                    {priceFormatter.format(product.price)}
                   </p>
                   <p className="overflow-hidden text-ellipsis text-wrap text-sm text-secondary-foreground sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl">
                     {truncateText(`${product.description}`, 400)}

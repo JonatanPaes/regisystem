@@ -5,6 +5,7 @@ import { ptBR } from 'date-fns/locale'
 import { useEffect, useState } from 'react'
 
 import { TableCell, TableRow } from '@/app/components/ui/table'
+import { priceFormatter } from '@/utils/formatter'
 
 interface Orders {
   id: string
@@ -47,12 +48,7 @@ export function OrderTableRow() {
               <TableCell>{order.nameClient}</TableCell>
               <TableCell>{order.productName}</TableCell>
               <TableCell>{order.paymentMethod}</TableCell>
-              <TableCell>
-                {order.price.toLocaleString('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })}
-              </TableCell>
+              <TableCell>{priceFormatter.format(order.price)}</TableCell>
             </TableRow>
           )
         })}

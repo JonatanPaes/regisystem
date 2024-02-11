@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from '@/app/components/ui/select'
 import { useAssistant } from '@/contexts/assistant-context'
+import { priceFormatter } from '@/utils/formatter'
 
 const paymentForm = z.object({
   type: z.enum(['card', 'cash'], {
@@ -122,125 +123,75 @@ export default function Payment({ params }: { params: { id: string } }) {
                     <SelectContent>
                       <SelectItem value="1X">
                         1X{'  '}
-                        {(product?.price
-                          ? product?.price / 1
-                          : 0
-                        ).toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
+                        {priceFormatter.format(
+                          product?.price ? product?.price / 1 : 0,
+                        )}
                       </SelectItem>
                       <SelectItem value="2X">
                         2X{'  '}
-                        {(product?.price
-                          ? product?.price / 2
-                          : 0
-                        ).toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
+                        {priceFormatter.format(
+                          product?.price ? product?.price / 2 : 0,
+                        )}
                       </SelectItem>
                       <SelectItem value="3X">
-                        {' '}
                         3X{'  '}
-                        {(product?.price
-                          ? product?.price / 3
-                          : 0
-                        ).toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
+                        {priceFormatter.format(
+                          product?.price ? product?.price / 3 : 0,
+                        )}
                       </SelectItem>
                       <SelectItem value="4X">
-                        {' '}
                         4X{'  '}
-                        {(product?.price
-                          ? product?.price / 4
-                          : 0
-                        ).toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
+                        {priceFormatter.format(
+                          product?.price ? product?.price / 4 : 0,
+                        )}
                       </SelectItem>
                       <SelectItem value="5x">
                         5X{'  '}
-                        {(product?.price
-                          ? product?.price / 5
-                          : 0
-                        ).toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
+                        {priceFormatter.format(
+                          product?.price ? product?.price / 5 : 0,
+                        )}
                       </SelectItem>
                       <SelectItem value="6X">
                         6X{'  '}
-                        {(product?.price
-                          ? product?.price / 6
-                          : 0
-                        ).toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
+                        {priceFormatter.format(
+                          product?.price ? product?.price / 6 : 0,
+                        )}
                       </SelectItem>
                       <SelectItem value="7x">
                         7X{'  '}
-                        {(product?.price
-                          ? product?.price / 7
-                          : 0
-                        ).toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
+                        {priceFormatter.format(
+                          product?.price ? product?.price / 7 : 0,
+                        )}
                       </SelectItem>
                       <SelectItem value="8X">
                         8X{'  '}
-                        {(product?.price
-                          ? product?.price / 8
-                          : 0
-                        ).toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
+                        {priceFormatter.format(
+                          product?.price ? product?.price / 8 : 0,
+                        )}
                       </SelectItem>
                       <SelectItem value="9X">
                         9X{'  '}
-                        {(product?.price
-                          ? product?.price / 9
-                          : 0
-                        ).toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
+                        {priceFormatter.format(
+                          product?.price ? product?.price / 9 : 0,
+                        )}
                       </SelectItem>
                       <SelectItem value="10X">
                         10X{'  '}
-                        {(product?.price
-                          ? product?.price / 10
-                          : 0
-                        ).toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
+                        {priceFormatter.format(
+                          product?.price ? product?.price / 10 : 0,
+                        )}
                       </SelectItem>
                       <SelectItem value="11X">
                         11X{'  '}
-                        {(product?.price
-                          ? product?.price / 11
-                          : 0
-                        ).toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
+                        {priceFormatter.format(
+                          product?.price ? product?.price / 11 : 0,
+                        )}
                       </SelectItem>
                       <SelectItem value="12X">
                         12X{'  '}
-                        {(product?.price
-                          ? product?.price / 12
-                          : 0
-                        ).toLocaleString('pt-BR', {
-                          style: 'currency',
-                          currency: 'BRL',
-                        })}
+                        {priceFormatter.format(
+                          product?.price ? product?.price / 12 : 0,
+                        )}
                       </SelectItem>
                     </SelectContent>
                   </Select>
