@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -22,6 +22,7 @@ import { Input } from '@/app/components/ui/input'
 import { Label } from '@/app/components/ui/label'
 import { Separator } from '@/app/components/ui/separator'
 import { useAssistant } from '@/contexts/assistant-context'
+import { priceFormatter } from '@/utils/formatter'
 
 const addressForm = z.object({
   cep: z
@@ -71,8 +72,10 @@ export default function Address() {
     formState: { isSubmitting, errors, isValid },
     setError,
     clearErrors,
+    setValue,
   } = useForm<AddressForm>({
     resolver: zodResolver(addressForm),
+    shouldUnregister: false,
   })
 
   const paymentMethod =
@@ -130,7 +133,6 @@ export default function Address() {
   async function fetchAddressInfo(cep: string) {
     try {
       const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`)
-
       const { data } = response
 
       if (data.erro) {
@@ -139,21 +141,30 @@ export default function Address() {
         })
       } else {
         clearErrors('cep')
+
+        setAddress((prevAddress) => ({
+          ...prevAddress,
+          cep,
+          address: data.logradouro,
+          neighborhood: data.bairro,
+          city: data.localidade,
+          state: data.uf,
+        }))
       }
-
-      const { logradouro, bairro, localidade, uf } = data
-
-      setAddress({
-        cep,
-        address: logradouro,
-        neighborhood: bairro,
-        city: localidade,
-        state: uf,
-      })
     } catch (error) {
       console.error('Erro ao buscar informações do CEP:', error)
     }
   }
+
+  useEffect(() => {
+    if (address) {
+      setValue('cep', address.cep)
+      setValue('address', address.address)
+      setValue('neighborhood', address.neighborhood)
+      setValue('city', address.city)
+      setValue('state', address.state)
+    }
+  }, [address, setValue])
 
   return (
     <div className="flex flex-col justify-center gap-6">
@@ -177,10 +188,7 @@ export default function Address() {
 
               <p className="text-sm text-card-foreground">
                 {' '}
-                {product?.price.toLocaleString('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                })}
+                {priceFormatter.format(product?.price ?? 0)}
               </p>
 
               <span className="text-sm">Qtd: 1</span>
@@ -242,7 +250,7 @@ export default function Address() {
             id="address"
             type="text"
             placeholder="Digite o endereço"
-            value={address?.address || ''}
+            value={address?.address}
             {...register('address')}
           />
 
@@ -271,7 +279,7 @@ export default function Address() {
             id="neighborhood"
             type="text"
             placeholder="Digite o bairro"
-            value={address?.neighborhood || ''}
+            value={address?.neighborhood}
             {...register('neighborhood')}
           />
 
@@ -286,7 +294,7 @@ export default function Address() {
             id="city"
             type="text"
             placeholder=""
-            value={address?.city || ''}
+            value={address?.city}
             {...register('city')}
           />
 
@@ -299,7 +307,7 @@ export default function Address() {
             id="state"
             type="text"
             placeholder=""
-            value={address?.state || ''}
+            value={address?.state}
             {...register('state')}
           />
 
