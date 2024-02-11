@@ -61,7 +61,7 @@ export default function Payment({ params }: { params: { id: string } }) {
         Método de Pagamento
       </h1>
 
-      <div className="grid gap-6  pt-0">
+      <div className="grid gap-6 pt-0">
         <Controller
           control={control}
           name="type"
@@ -69,7 +69,7 @@ export default function Payment({ params }: { params: { id: string } }) {
             return (
               <RadioGroup
                 onValueChange={field.onChange}
-                className="grid grid-cols-3 gap-4"
+                className="grid grid-cols-2 gap-4"
                 defaultValue={field.value}
               >
                 <div>
