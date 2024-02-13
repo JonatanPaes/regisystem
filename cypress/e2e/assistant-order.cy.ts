@@ -46,16 +46,16 @@ describe('Assistant order', () => {
 
     cy.contains('button', 'Continuar').click()
 
-    cy.get('input[id="cep"]').type('185420000')
+    cy.get('input[id="cep"]').type('01153000')
     cy.get('input[id="address"]').type('Rua fulano de tal')
     cy.get('input[id="residenceNumber"]').type('777')
     cy.get('input[id="neighborhood"]').type('Vila dev')
     cy.get('input[id="city"]').type('São Paulo')
-    cy.get('input[id="state"]').type('São Paulo')
+    cy.get('input[id="state"]').type('SP')
 
     cy.contains('button', 'Resumo da Compra').click()
     cy.contains('button', 'Finalizar Compra').click()
 
-    cy.contains('a', 'Home').click()
+    cy.contains('a', 'Início').click()
   })
 })
